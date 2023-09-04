@@ -39,7 +39,7 @@ class HomePage extends HookWidget {
       () => NetworkAssetBundle(Uri.parse(url))
           .load(url)
           .then((data) => data.buffer.asUint8List())
-          .then((data) => Image.memory(data)),
+          .then((data) => Image.memory(data, width: 200, height: 200)),
     );
     final snapshot = useFuture(future, initialData: const SizedBox());
 
@@ -47,10 +47,13 @@ class HomePage extends HookWidget {
       appBar: AppBar(
         title: const Text('Home Page'),
       ),
-      body: Column(
-        children: [
-          snapshot.data,
-        ].compactMap().toList(),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            snapshot.data,
+          ].compactMap().toList(),
+        ),
       ),
     );
   }
